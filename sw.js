@@ -1,20 +1,26 @@
-const CACHE_NAME = 'lawha-ref-v1';
-const ASSETS = ['./index.html', './manifest.json', './icon-192x192.png', './icon-512x512.png'];
-
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS)));
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(names => Promise.all(
-    names.filter(n => n !== CACHE_NAME).map(n => caches.delete(n))
-  )));
-  self.clients.claim();
-});
-
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request).catch(() => caches.match('./index.html')))
-  );
-});
+{
+  "name": "مرجع بناء اللوحات — بياناتك تتكلّم",
+  "short_name": "بياناتك تتكلًم",
+  "description": "لوحة تحكم تفاعلية",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#08294D",
+  "theme_color": "#08294D",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
